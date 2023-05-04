@@ -1,0 +1,48 @@
+file 1443 1683207904                                            
+version 2
+run General-0-20230504-16:45:00-26364
+attr configname General
+attr datetime 20230504-16:45:00
+attr experiment General
+attr inifile omnetpp.ini
+attr iterationvars ""
+attr iterationvarsf ""
+attr measurement ""
+attr network src.Network
+attr processid 26364
+attr repetition 0
+attr replication #0
+attr resultdir results
+attr runnumber 0
+attr seedset 0
+param **.wlan[*].radio.typename "\"UnitDiskRadio\""
+param *.host*.wlan[*].radio.transmitter.communicationRange 120m
+param *.host5.wlan[*].radio.transmitter.communicationRange 620m
+param **.wlan[*].radio.displayCommunicationRange true
+
+vector 0 Network.host1.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr source radioModeChanged
+attr title "Radio mode, vector"
+vector 1 Network.host2.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr source radioModeChanged
+attr title "Radio mode, vector"
+vector 2 Network.host3.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr source radioModeChanged
+attr title "Radio mode, vector"
+vector 3 Network.host4.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr source radioModeChanged
+attr title "Radio mode, vector"
+vector 4 Network.host5.wlan[0].radio radioMode:vector ETV
+attr interpolationmode sample-hold
+attr source radioModeChanged
+attr title "Radio mode, vector"
+0	1362 16 0 0 0 0 2 0 0 0 0
+1	1378 16 0 0 0 0 2 0 0 0 0
+2	1394 16 0 0 0 0 2 0 0 0 0
+3	1410 16 0 0 0 0 2 0 0 0 0
+4	1426 16 0 0 0 0 2 0 0 0 0
+
