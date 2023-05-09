@@ -30,10 +30,11 @@ PROJECTRELATIVE_PATH =
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS = $O/src/TDMAMac.o
+OBJS = $O/src/TDMAMac.o $O/src/TDMAMacHeader_m.o
 
 # Message files
-MSGFILES =
+MSGFILES = \
+    src/TDMAMacHeader.msg
 
 # SM files
 SMFILES =
@@ -83,6 +84,9 @@ endif
 #------------------------------------------------------------------------------
 # User-supplied makefile fragment(s)
 # >>>
+# inserted from file 'makefrag':
+MSGC:=$(MSGC) --msg6
+
 # <<<
 #------------------------------------------------------------------------------
 

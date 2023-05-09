@@ -17,18 +17,46 @@
 #define __PLAINPROJECT_TDMAMAC_H_
 
 #include <omnetpp.h>
+#include "inet/linklayer/base/MacProtocolBase.h"
+#include "inet/linklayer/common/MacAddress.h"
+#include "inet/linklayer/contract/IMacProtocol.h"
+#include "inet/physicallayer/contract/packetlevel/IRadio.h"
+#include "inet/queueing/contract/IPacketQueue.h"
 
 using namespace omnetpp;
+using namespace inet;
+
 
 /**
  * TODO - Generated class
  */
-class TDMAMac : public cSimpleModule
+class TDMAMac : public MacProtocolBase, public IMacProtocol
 {
   protected:
-    virtual void initialize() override;
+    virtual void configureInterfaceEntry() override;
+    void scheduleTimeSlots();
+    void updateTimeSlotCounter(int &currentSlotCounter);
+    int slotCounter;
+    double slotDuration;
+    double bitrate;
+    MacAddress address;
+    cMessage *_slotBegins;
+    cMessage *_timeout;
+private:
+public:
 
+    TDMAMac() : MacProtocolBase(),
+            slotCounter(-1), bitrate(0), slotDuration(0)
+            {}
+    virtual ~TDMAMac();
+    virtual void initialize(int) override;
     virtual void handleMessage(cMessage *msg) override;
+    virtual void handleSelfMessage(cMessage *) override;
+
+    virtual void encapsulate(Packet *);
+    virtual void decapsulate(Packet *);
+
+
 };
 
 #endif

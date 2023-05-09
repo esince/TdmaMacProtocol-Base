@@ -1,11 +1,11 @@
-out/gcc-release//src/TDMAMac.o: src/TDMAMac.cc src/TDMAMac.h \
+out/gcc-debug//src/TDMAMac.o: src/TDMAMac.cc src/TDMAMac.h \
  /home/esince/Downloads/omnetpp-5.6.2/include/omnetpp.h \
  ../inet/src/inet/linklayer/base/MacProtocolBase.h \
  ../inet/src/inet/common/LayeredProtocolBase.h \
  ../inet/src/inet/common/lifecycle/OperationalBase.h \
  ../inet/src/inet/common/lifecycle/ILifecycle.h \
  ../inet/src/inet/common/INETDefs.h \
- ../inet/src/inet/common/precompiled_release.h \
+ ../inet/src/inet/common/precompiled_debug.h \
  ../inet/src/inet/common/precompiled.h ../inet/src/inet/opp_defines.h \
  ../inet/src/inet/features.h ../inet/src/inet/common/Compat.h \
  ../inet/src/inet/common/InitStages.h \
@@ -101,7 +101,7 @@ src/TDMAMac.h:
 
 ../inet/src/inet/common/INETDefs.h:
 
-../inet/src/inet/common/precompiled_release.h:
+../inet/src/inet/common/precompiled_debug.h:
 
 ../inet/src/inet/common/precompiled.h:
 

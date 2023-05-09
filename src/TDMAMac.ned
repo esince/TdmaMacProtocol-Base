@@ -33,12 +33,16 @@ module TDMAMac extends MacProtocolBase like IMacProtocol
         string networkName = default("Network"); 
         
         double slotDuration @unit(s) = default(100ms);
+        double defaultChannel = default(0);  // default channel
         double bitrate @unit(bps) = default(19200bps); 
+        int mtu @unit(B) = default(0B);
+        
+        int assignedSlot = default(-1);
   	
    submodules:
         queue: <default("DropTailQueue")> like IPacketQueue {
             parameters:
-                packetCapacity = default(2);
+                packetCapacity = default(20);
                 @display("p=100,100;q=l2queue");
         }
 
