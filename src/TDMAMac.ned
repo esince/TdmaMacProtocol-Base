@@ -31,8 +31,10 @@ module TDMAMac extends MacProtocolBase like IMacProtocol
         @class(TDMAMac);
         string address = default("auto");
         string networkName = default("Network"); 
+        string radioModule = default("^.radio");   // The path to the Radio module  //FIXME remove default value
         
         double slotDuration @unit(s) = default(100ms);
+        int headerLength @unit(b) = default(10b);
         double defaultChannel = default(0);  // default channel
         double bitrate @unit(bps) = default(19200bps); 
         int mtu @unit(B) = default(0B);

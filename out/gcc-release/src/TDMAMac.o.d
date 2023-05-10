@@ -82,10 +82,24 @@ out/gcc-release//src/TDMAMac.o: src/TDMAMac.cc src/TDMAMac.h \
  ../inet/src/inet/physicallayer/contract/packetlevel/IArrival.h \
  ../inet/src/inet/physicallayer/contract/packetlevel/IPhysicalLayerFrame.h \
  ../inet/src/inet/physicallayer/contract/packetlevel/ITransmitter.h \
+ ../inet/src/inet/linklayer/common/InterfaceTag_m.h \
+ ../inet/src/inet/common/TagBase_m.h \
+ ../inet/src/inet/common/ProtocolGroup.h \
+ ../inet/src/inet/common/Protocol.h \
+ ../inet/src/inet/common/ProtocolTag_m.h \
+ ../inet/src/inet/common/Protocol_m.h \
+ ../inet/src/inet/common/packet/chunk/Chunk_m.h \
+ ../inet/src/inet/common/packet/chunk/BitCountChunk.h \
+ ../inet/src/inet/common/packet/chunk/ByteCountChunk.h \
+ ../inet/src/inet/common/packet/chunk/cPacketChunk.h \
+ ../inet/src/inet/common/packet/chunk/SequenceChunk.h \
+ ../inet/src/inet/common/packet/chunk/SliceChunk.h \
+ ../inet/src/inet/common/packet/chunk/FieldsChunk.h \
+ ../inet/src/inet/physicallayer/contract/packetlevel/SignalTag_m.h \
  ../inet/src/inet/common/ModuleAccess.h \
  ../inet/src/inet/networklayer/contract/IInterfaceTable.h \
- ../inet/src/inet/linklayer/common/InterfaceTag_m.h \
- ../inet/src/inet/common/TagBase_m.h
+ ../inet/src/inet/linklayer/common/MacAddressTag_m.h \
+ ../inet/src/inet/linklayer/common/MacAddress_m.h src/TDMAMacHeader_m.h
 
 src/TDMAMac.h:
 
@@ -263,10 +277,40 @@ src/TDMAMac.h:
 
 ../inet/src/inet/physicallayer/contract/packetlevel/ITransmitter.h:
 
+../inet/src/inet/linklayer/common/InterfaceTag_m.h:
+
+../inet/src/inet/common/TagBase_m.h:
+
+../inet/src/inet/common/ProtocolGroup.h:
+
+../inet/src/inet/common/Protocol.h:
+
+../inet/src/inet/common/ProtocolTag_m.h:
+
+../inet/src/inet/common/Protocol_m.h:
+
+../inet/src/inet/common/packet/chunk/Chunk_m.h:
+
+../inet/src/inet/common/packet/chunk/BitCountChunk.h:
+
+../inet/src/inet/common/packet/chunk/ByteCountChunk.h:
+
+../inet/src/inet/common/packet/chunk/cPacketChunk.h:
+
+../inet/src/inet/common/packet/chunk/SequenceChunk.h:
+
+../inet/src/inet/common/packet/chunk/SliceChunk.h:
+
+../inet/src/inet/common/packet/chunk/FieldsChunk.h:
+
+../inet/src/inet/physicallayer/contract/packetlevel/SignalTag_m.h:
+
 ../inet/src/inet/common/ModuleAccess.h:
 
 ../inet/src/inet/networklayer/contract/IInterfaceTable.h:
 
-../inet/src/inet/linklayer/common/InterfaceTag_m.h:
+../inet/src/inet/linklayer/common/MacAddressTag_m.h:
 
-../inet/src/inet/common/TagBase_m.h:
+../inet/src/inet/linklayer/common/MacAddress_m.h:
+
+src/TDMAMacHeader_m.h:

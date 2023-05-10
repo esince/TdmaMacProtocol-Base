@@ -20,6 +20,7 @@
 namespace inet {
 
 class TDMAMacHeaderBase;
+class TDMAMacDataFrame;
 } // namespace inet
 
 #include "inet/common/INETDefs_m.h" // import inet.common.INETDefs
@@ -37,15 +38,17 @@ namespace inet {
  * enum TDMAMacTypes
  * {
  *     DELAY = 1;
+ *     _SLOT_BEGINS = 2;
  * }
  * </pre>
  */
 enum TDMAMacTypes {
-    DELAY = 1
+    DELAY = 1,
+    _SLOT_BEGINS = 2
 };
 
 /**
- * Class generated from <tt>src/TDMAMacHeader.msg:29</tt> by nedtool.
+ * Class generated from <tt>src/TDMAMacHeader.msg:30</tt> by nedtool.
  * <pre>
  * class TDMAMacHeaderBase extends FieldsChunk
  * {
@@ -91,6 +94,44 @@ class TDMAMacHeaderBase : public ::inet::FieldsChunk
 
 inline void doParsimPacking(omnetpp::cCommBuffer *b, const TDMAMacHeaderBase& obj) {obj.parsimPack(b);}
 inline void doParsimUnpacking(omnetpp::cCommBuffer *b, TDMAMacHeaderBase& obj) {obj.parsimUnpack(b);}
+
+/**
+ * Class generated from <tt>src/TDMAMacHeader.msg:37</tt> by nedtool.
+ * <pre>
+ * class TDMAMacDataFrame extends TDMAMacHeaderBase
+ * {
+ *     int networkProtocol = -1;
+ * }
+ * </pre>
+ */
+class TDMAMacDataFrame : public ::inet::TDMAMacHeaderBase
+{
+  protected:
+    int networkProtocol = -1;
+
+  private:
+    void copy(const TDMAMacDataFrame& other);
+
+  protected:
+    // protected and unimplemented operator==(), to prevent accidental usage
+    bool operator==(const TDMAMacDataFrame&);
+
+  public:
+    TDMAMacDataFrame();
+    TDMAMacDataFrame(const TDMAMacDataFrame& other);
+    virtual ~TDMAMacDataFrame();
+    TDMAMacDataFrame& operator=(const TDMAMacDataFrame& other);
+    virtual TDMAMacDataFrame *dup() const override {return new TDMAMacDataFrame(*this);}
+    virtual void parsimPack(omnetpp::cCommBuffer *b) const override;
+    virtual void parsimUnpack(omnetpp::cCommBuffer *b) override;
+
+    // field getter/setter methods
+    virtual int getNetworkProtocol() const;
+    virtual void setNetworkProtocol(int networkProtocol);
+};
+
+inline void doParsimPacking(omnetpp::cCommBuffer *b, const TDMAMacDataFrame& obj) {obj.parsimPack(b);}
+inline void doParsimUnpacking(omnetpp::cCommBuffer *b, TDMAMacDataFrame& obj) {obj.parsimUnpack(b);}
 
 } // namespace inet
 

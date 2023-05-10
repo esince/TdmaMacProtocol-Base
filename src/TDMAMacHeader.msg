@@ -23,6 +23,7 @@ namespace inet;
 
 enum TDMAMacTypes{
     DELAY = 1;
+    _SLOT_BEGINS = 2;
 };
 
 class TDMAMacHeaderBase extends FieldsChunk
@@ -30,4 +31,9 @@ class TDMAMacHeaderBase extends FieldsChunk
     MacAddress srcAddr;
     MacAddress destAddr;
     TDMAMacTypes type;
+}
+
+class TDMAMacDataFrame extends TDMAMacHeaderBase
+{
+    int networkProtocol = -1;
 }

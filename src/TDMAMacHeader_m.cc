@@ -211,6 +211,7 @@ EXECUTE_ON_STARTUP(
     omnetpp::cEnum *e = omnetpp::cEnum::find("inet::TDMAMacTypes");
     if (!e) omnetpp::enums.getInstance()->add(e = new omnetpp::cEnum("inet::TDMAMacTypes"));
     e->insert(DELAY, "DELAY");
+    e->insert(_SLOT_BEGINS, "_SLOT_BEGINS");
 )
 
 Register_Class(TDMAMacHeaderBase)
@@ -541,6 +542,289 @@ void *TDMAMacHeaderBaseDescriptor::getFieldStructValuePointer(void *object, int 
     switch (field) {
         case FIELD_srcAddr: return toVoidPtr(&pp->getSrcAddr()); break;
         case FIELD_destAddr: return toVoidPtr(&pp->getDestAddr()); break;
+        default: return nullptr;
+    }
+}
+
+Register_Class(TDMAMacDataFrame)
+
+TDMAMacDataFrame::TDMAMacDataFrame() : ::inet::TDMAMacHeaderBase()
+{
+}
+
+TDMAMacDataFrame::TDMAMacDataFrame(const TDMAMacDataFrame& other) : ::inet::TDMAMacHeaderBase(other)
+{
+    copy(other);
+}
+
+TDMAMacDataFrame::~TDMAMacDataFrame()
+{
+}
+
+TDMAMacDataFrame& TDMAMacDataFrame::operator=(const TDMAMacDataFrame& other)
+{
+    if (this == &other) return *this;
+    ::inet::TDMAMacHeaderBase::operator=(other);
+    copy(other);
+    return *this;
+}
+
+void TDMAMacDataFrame::copy(const TDMAMacDataFrame& other)
+{
+    this->networkProtocol = other.networkProtocol;
+}
+
+void TDMAMacDataFrame::parsimPack(omnetpp::cCommBuffer *b) const
+{
+    ::inet::TDMAMacHeaderBase::parsimPack(b);
+    doParsimPacking(b,this->networkProtocol);
+}
+
+void TDMAMacDataFrame::parsimUnpack(omnetpp::cCommBuffer *b)
+{
+    ::inet::TDMAMacHeaderBase::parsimUnpack(b);
+    doParsimUnpacking(b,this->networkProtocol);
+}
+
+int TDMAMacDataFrame::getNetworkProtocol() const
+{
+    return this->networkProtocol;
+}
+
+void TDMAMacDataFrame::setNetworkProtocol(int networkProtocol)
+{
+    handleChange();
+    this->networkProtocol = networkProtocol;
+}
+
+class TDMAMacDataFrameDescriptor : public omnetpp::cClassDescriptor
+{
+  private:
+    mutable const char **propertynames;
+    enum FieldConstants {
+        FIELD_networkProtocol,
+    };
+  public:
+    TDMAMacDataFrameDescriptor();
+    virtual ~TDMAMacDataFrameDescriptor();
+
+    virtual bool doesSupport(omnetpp::cObject *obj) const override;
+    virtual const char **getPropertyNames() const override;
+    virtual const char *getProperty(const char *propertyname) const override;
+    virtual int getFieldCount() const override;
+    virtual const char *getFieldName(int field) const override;
+    virtual int findField(const char *fieldName) const override;
+    virtual unsigned int getFieldTypeFlags(int field) const override;
+    virtual const char *getFieldTypeString(int field) const override;
+    virtual const char **getFieldPropertyNames(int field) const override;
+    virtual const char *getFieldProperty(int field, const char *propertyname) const override;
+    virtual int getFieldArraySize(void *object, int field) const override;
+
+    virtual const char *getFieldDynamicTypeString(void *object, int field, int i) const override;
+    virtual std::string getFieldValueAsString(void *object, int field, int i) const override;
+    virtual bool setFieldValueAsString(void *object, int field, int i, const char *value) const override;
+
+    virtual const char *getFieldStructName(int field) const override;
+    virtual void *getFieldStructValuePointer(void *object, int field, int i) const override;
+};
+
+Register_ClassDescriptor(TDMAMacDataFrameDescriptor)
+
+TDMAMacDataFrameDescriptor::TDMAMacDataFrameDescriptor() : omnetpp::cClassDescriptor(omnetpp::opp_typename(typeid(inet::TDMAMacDataFrame)), "inet::TDMAMacHeaderBase")
+{
+    propertynames = nullptr;
+}
+
+TDMAMacDataFrameDescriptor::~TDMAMacDataFrameDescriptor()
+{
+    delete[] propertynames;
+}
+
+bool TDMAMacDataFrameDescriptor::doesSupport(omnetpp::cObject *obj) const
+{
+    return dynamic_cast<TDMAMacDataFrame *>(obj)!=nullptr;
+}
+
+const char **TDMAMacDataFrameDescriptor::getPropertyNames() const
+{
+    if (!propertynames) {
+        static const char *names[] = {  nullptr };
+        omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+        const char **basenames = basedesc ? basedesc->getPropertyNames() : nullptr;
+        propertynames = mergeLists(basenames, names);
+    }
+    return propertynames;
+}
+
+const char *TDMAMacDataFrameDescriptor::getProperty(const char *propertyname) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    return basedesc ? basedesc->getProperty(propertyname) : nullptr;
+}
+
+int TDMAMacDataFrameDescriptor::getFieldCount() const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    return basedesc ? 1+basedesc->getFieldCount() : 1;
+}
+
+unsigned int TDMAMacDataFrameDescriptor::getFieldTypeFlags(int field) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->getFieldTypeFlags(field);
+        field -= basedesc->getFieldCount();
+    }
+    static unsigned int fieldTypeFlags[] = {
+        FD_ISEDITABLE,    // FIELD_networkProtocol
+    };
+    return (field >= 0 && field < 1) ? fieldTypeFlags[field] : 0;
+}
+
+const char *TDMAMacDataFrameDescriptor::getFieldName(int field) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->getFieldName(field);
+        field -= basedesc->getFieldCount();
+    }
+    static const char *fieldNames[] = {
+        "networkProtocol",
+    };
+    return (field >= 0 && field < 1) ? fieldNames[field] : nullptr;
+}
+
+int TDMAMacDataFrameDescriptor::findField(const char *fieldName) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    int base = basedesc ? basedesc->getFieldCount() : 0;
+    if (fieldName[0] == 'n' && strcmp(fieldName, "networkProtocol") == 0) return base+0;
+    return basedesc ? basedesc->findField(fieldName) : -1;
+}
+
+const char *TDMAMacDataFrameDescriptor::getFieldTypeString(int field) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->getFieldTypeString(field);
+        field -= basedesc->getFieldCount();
+    }
+    static const char *fieldTypeStrings[] = {
+        "int",    // FIELD_networkProtocol
+    };
+    return (field >= 0 && field < 1) ? fieldTypeStrings[field] : nullptr;
+}
+
+const char **TDMAMacDataFrameDescriptor::getFieldPropertyNames(int field) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->getFieldPropertyNames(field);
+        field -= basedesc->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+const char *TDMAMacDataFrameDescriptor::getFieldProperty(int field, const char *propertyname) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->getFieldProperty(field, propertyname);
+        field -= basedesc->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+int TDMAMacDataFrameDescriptor::getFieldArraySize(void *object, int field) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->getFieldArraySize(object, field);
+        field -= basedesc->getFieldCount();
+    }
+    TDMAMacDataFrame *pp = (TDMAMacDataFrame *)object; (void)pp;
+    switch (field) {
+        default: return 0;
+    }
+}
+
+const char *TDMAMacDataFrameDescriptor::getFieldDynamicTypeString(void *object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->getFieldDynamicTypeString(object,field,i);
+        field -= basedesc->getFieldCount();
+    }
+    TDMAMacDataFrame *pp = (TDMAMacDataFrame *)object; (void)pp;
+    switch (field) {
+        default: return nullptr;
+    }
+}
+
+std::string TDMAMacDataFrameDescriptor::getFieldValueAsString(void *object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->getFieldValueAsString(object,field,i);
+        field -= basedesc->getFieldCount();
+    }
+    TDMAMacDataFrame *pp = (TDMAMacDataFrame *)object; (void)pp;
+    switch (field) {
+        case FIELD_networkProtocol: return long2string(pp->getNetworkProtocol());
+        default: return "";
+    }
+}
+
+bool TDMAMacDataFrameDescriptor::setFieldValueAsString(void *object, int field, int i, const char *value) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->setFieldValueAsString(object,field,i,value);
+        field -= basedesc->getFieldCount();
+    }
+    TDMAMacDataFrame *pp = (TDMAMacDataFrame *)object; (void)pp;
+    switch (field) {
+        case FIELD_networkProtocol: pp->setNetworkProtocol(string2long(value)); return true;
+        default: return false;
+    }
+}
+
+const char *TDMAMacDataFrameDescriptor::getFieldStructName(int field) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->getFieldStructName(field);
+        field -= basedesc->getFieldCount();
+    }
+    switch (field) {
+        default: return nullptr;
+    };
+}
+
+void *TDMAMacDataFrameDescriptor::getFieldStructValuePointer(void *object, int field, int i) const
+{
+    omnetpp::cClassDescriptor *basedesc = getBaseClassDescriptor();
+    if (basedesc) {
+        if (field < basedesc->getFieldCount())
+            return basedesc->getFieldStructValuePointer(object, field, i);
+        field -= basedesc->getFieldCount();
+    }
+    TDMAMacDataFrame *pp = (TDMAMacDataFrame *)object; (void)pp;
+    switch (field) {
         default: return nullptr;
     }
 }

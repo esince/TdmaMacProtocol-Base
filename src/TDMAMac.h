@@ -22,14 +22,18 @@
 #include "inet/linklayer/contract/IMacProtocol.h"
 #include "inet/physicallayer/contract/packetlevel/IRadio.h"
 #include "inet/queueing/contract/IPacketQueue.h"
+#include "inet/linklayer/common/InterfaceTag_m.h"       // InterfaceINd, decapsulate
+#include "inet/common/ProtocolGroup.h"                  // ProtocolGroup, decapsulate, encapsulate
+#include "inet/common/ProtocolTag_m.h"                  // PacketProtocolTag, addTag, addTagIfAbsent, getTag
+#include "inet/physicallayer/contract/packetlevel/SignalTag_m.h"
+#include "inet/common/ModuleAccess.h"                   // getContainingNOde(), getModuleFromPar
+#include "inet/linklayer/common/MacAddressTag_m.h"      // MacAddressInd
+
+#include "TDMAMacHeader_m.h"
 
 using namespace omnetpp;
 using namespace inet;
 
-
-/**
- * TODO - Generated class
- */
 class TDMAMac : public MacProtocolBase, public IMacProtocol
 {
   protected:
@@ -42,6 +46,11 @@ class TDMAMac : public MacProtocolBase, public IMacProtocol
     MacAddress address;
     cMessage *_slotBegins;
     cMessage *_timeout;
+
+    queueing::IPacketQueue *txQueue;
+
+    physicallayer::IRadio *radio;
+    physicallayer::IRadio::TransmissionState transmissionState;
 private:
 public:
 
@@ -52,6 +61,11 @@ public:
     virtual void initialize(int) override;
     virtual void handleMessage(cMessage *msg) override;
     virtual void handleSelfMessage(cMessage *) override;
+    virtual void handleUpperPacket(Packet *packet) override;
+    virtual void handleLowerPacket(Packet *packet) override;
+
+    virtual void receiveSignal(cComponent *source, simsignal_t signalID, intval_t value, cObject *details) override;
+    void attachSignal(Packet *macPkt);
 
     virtual void encapsulate(Packet *);
     virtual void decapsulate(Packet *);
