@@ -14,8 +14,6 @@
 // 
 
 #include "TDMAMac.h"
-#include "inet/common/ModuleAccess.h"                   // getContainingNOde(), getModuleFromPar
-#include "inet/linklayer/common/InterfaceTag_m.h"       // InterfaceINd, decapsulate
 
 //Register_Class(TDMAMac);
 
@@ -53,7 +51,7 @@ void TDMAMac::initialize(int stage)
     else if(stage == INITSTAGE_LINK_LAYER){
 
         _timeout = new cMessage("_TIMEOUT");
-        _slotBegins = new cMessage("_SLOT_BEGINS");
+        slotBeginsEvent = new cMessage("SLOT_BEGINS");
 
         EV_DETAIL << " slotDuration = " << slotDuration << endl;
 
@@ -68,38 +66,34 @@ void TDMAMac::initialize(int stage)
         // setting radio mode to Rx
         radio->setRadioMode(IRadio::RADIO_MODE_RECEIVER);
         // scheduling self event for the current slot
-        scheduleAt(simTime()+0.5 , _slotBegins);
+        scheduleAt(simTime(), slotBeginsEvent);
     }
 
 }
 
-void TDMAMac::handleMessage(cMessage *msg)
+/*void TDMAMac::handleMessage(cMessage *msg)
 {
     // TODO - Generated method body
-}
+}*/
 
 void TDMAMac::handleSelfMessage(cMessage *msg){
     address = interfaceEntry->getMacAddress();
-    EV << "Unexpected self message type --- discarding " << endl;
-     if (msg->getKind() != _SLOT_BEGINS){
+     if (msg != slotBeginsEvent){
         EV << "Unexpected self message type --- discarding " << endl;
+        delete msg;
         return;
     }
+
     // scheduling self event for the next slot
-    scheduleAt(simTime() + slotDuration, _slotBegins);
+    scheduleAt(simTime() + slotDuration, slotBeginsEvent);
     // increase slot number with 1 after receiving _slotBegins self message
     updateTimeSlotCounter(slotCounter);
-    radio->setRadioMode(IRadio::RADIO_MODE_TRANSMITTER);                // setting radio mode to transmitter
-
-    currentTxFrame = txQueue->popPacket();
-    take(currentTxFrame);                                               // to take the ownership of the packet
-    sendDown(currentTxFrame);
+   // sendPacket();
 }
 
 void TDMAMac::handleUpperPacket(Packet *packet){
     encapsulate(packet);
     txQueue->pushPacket(packet);
-
 }
 
 void TDMAMac::handleLowerPacket(Packet *packet){
@@ -168,7 +162,7 @@ void TDMAMac::attachSignal(Packet *macPkt){
 
 TDMAMac::~TDMAMac(){
     cancelAndDelete(_timeout);
-    cancelAndDelete(_slotBegins);
+    cancelAndDelete(slotBeginsEvent);
 }
 
 
@@ -187,8 +181,22 @@ void TDMAMac::configureInterfaceEntry(){
 
 }
 
+void TDMAMac::sendPacket(){
+
+    radio->setRadioMode(IRadio::RADIO_MODE_TRANSMITTER);                // setting radio mode to transmitter
+    int x = txQueue->getNumPackets();
+    x++;
+    currentTxFrame = txQueue->popPacket();
+    take(currentTxFrame);                                               // to take the ownership of the packet
+    sendDown(currentTxFrame);
+}
+
 void TDMAMac::updateTimeSlotCounter(int &slotCounter){
     slotCounter++;
-    // TODO - If end of a network cycle
+    if(slotCounter == par("frameLength").intValue()){
+        EV << "NEW FRAME STARTING\n";
+        slotCounter = 0;
+        // TODO - scheduling the slots in every new frame starts
+    }
     EV << "Slot: [" << slotCounter << "]" << std::endl;
 }

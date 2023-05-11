@@ -38,13 +38,18 @@ class TDMAMac : public MacProtocolBase, public IMacProtocol
 {
   protected:
     virtual void configureInterfaceEntry() override;
+
     void scheduleTimeSlots();
     void updateTimeSlotCounter(int &currentSlotCounter);
+
     int slotCounter;
+
     double slotDuration;
     double bitrate;
+
     MacAddress address;
-    cMessage *_slotBegins;
+
+    cMessage *slotBeginsEvent;
     cMessage *_timeout;
 
     queueing::IPacketQueue *txQueue;
@@ -55,11 +60,14 @@ private:
 public:
 
     TDMAMac() : MacProtocolBase(),
-            slotCounter(-1), bitrate(0), slotDuration(0)
+            slotCounter(-1), bitrate(0),
+            slotDuration(0), radio(nullptr),
+            transmissionState(physicallayer::IRadio::TRANSMISSION_STATE_UNDEFINED),
+            _timeout(nullptr), slotBeginsEvent(nullptr)
             {}
     virtual ~TDMAMac();
-    virtual void initialize(int) override;
-    virtual void handleMessage(cMessage *msg) override;
+    virtual void initialize(int stageNum) override;
+   // virtual void handleMessage(cMessage *msg) override;
     virtual void handleSelfMessage(cMessage *) override;
     virtual void handleUpperPacket(Packet *packet) override;
     virtual void handleLowerPacket(Packet *packet) override;
@@ -69,6 +77,8 @@ public:
 
     virtual void encapsulate(Packet *);
     virtual void decapsulate(Packet *);
+
+    void sendPacket();
 
 
 };

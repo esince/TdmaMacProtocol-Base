@@ -37,18 +37,16 @@ namespace inet {
  * <pre>
  * enum TDMAMacTypes
  * {
- *     DELAY = 1;
- *     _SLOT_BEGINS = 2;
+ *     SLOT_BEGINS = 1;
  * }
  * </pre>
  */
 enum TDMAMacTypes {
-    DELAY = 1,
-    _SLOT_BEGINS = 2
+    SLOT_BEGINS = 1
 };
 
 /**
- * Class generated from <tt>src/TDMAMacHeader.msg:30</tt> by nedtool.
+ * Class generated from <tt>src/TDMAMacHeader.msg:29</tt> by nedtool.
  * <pre>
  * class TDMAMacHeaderBase extends FieldsChunk
  * {
@@ -96,7 +94,7 @@ inline void doParsimPacking(omnetpp::cCommBuffer *b, const TDMAMacHeaderBase& ob
 inline void doParsimUnpacking(omnetpp::cCommBuffer *b, TDMAMacHeaderBase& obj) {obj.parsimUnpack(b);}
 
 /**
- * Class generated from <tt>src/TDMAMacHeader.msg:37</tt> by nedtool.
+ * Class generated from <tt>src/TDMAMacHeader.msg:36</tt> by nedtool.
  * <pre>
  * class TDMAMacDataFrame extends TDMAMacHeaderBase
  * {

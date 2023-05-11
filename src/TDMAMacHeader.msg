@@ -22,8 +22,7 @@ import inet.linklayer.common.MacAddress;
 namespace inet;
 
 enum TDMAMacTypes{
-    DELAY = 1;
-    _SLOT_BEGINS = 2;
+    SLOT_BEGINS = 1;
 };
 
 class TDMAMacHeaderBase extends FieldsChunk
