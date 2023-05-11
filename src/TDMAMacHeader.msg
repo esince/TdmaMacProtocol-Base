@@ -22,7 +22,10 @@ import inet.linklayer.common.MacAddress;
 namespace inet;
 
 enum TDMAMacTypes{
-    SLOT_BEGINS = 1;
+    // packet types
+    TDMAMAC_DATA = 100;
+    // self message types
+    SLOT_BEGINS = 200;
 };
 
 class TDMAMacHeaderBase extends FieldsChunk

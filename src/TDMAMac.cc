@@ -20,16 +20,12 @@
 using namespace inet;
 using namespace inet::physicallayer;
 
-
 Define_Module(TDMAMac);
 
-void TDMAMac::initialize(int stage)
-{
-
+void TDMAMac::initialize(int stage){
     MacProtocolBase::initialize(stage);
-    EV_DETAIL << "Simple module initialized\n";
+
     slotCounter = -1;
-    EV_DETAIL << slotCounter << endl;
     updateTimeSlotCounter(slotCounter);
 
     /* This initStages mechanism is used for scheduling
@@ -53,8 +49,6 @@ void TDMAMac::initialize(int stage)
         _timeout = new cMessage("_TIMEOUT");
         slotBeginsEvent = new cMessage("SLOT_BEGINS");
 
-        EV_DETAIL << " slotDuration = " << slotDuration << endl;
-
         cModule *radioModule = getModuleFromPar<cModule>(par("radioModule"), this);
         //whenever the radio mode changes, handleRadioModeChanged() function of the current module will be called.
         radioModule->subscribe(IRadio::radioModeChangedSignal, this);
@@ -65,10 +59,10 @@ void TDMAMac::initialize(int stage)
         radio = check_and_cast<IRadio *>(radioModule);
         // setting radio mode to Rx
         radio->setRadioMode(IRadio::RADIO_MODE_RECEIVER);
+
         // scheduling self event for the current slot
         scheduleAt(simTime(), slotBeginsEvent);
     }
-
 }
 
 /*void TDMAMac::handleMessage(cMessage *msg)
@@ -78,7 +72,8 @@ void TDMAMac::initialize(int stage)
 
 void TDMAMac::handleSelfMessage(cMessage *msg){
     address = interfaceEntry->getMacAddress();
-     if (msg != slotBeginsEvent){
+
+    if (msg != slotBeginsEvent){
         EV << "Unexpected self message type --- discarding " << endl;
         delete msg;
         return;
@@ -86,17 +81,25 @@ void TDMAMac::handleSelfMessage(cMessage *msg){
 
     // scheduling self event for the next slot
     scheduleAt(simTime() + slotDuration, slotBeginsEvent);
+
     // increase slot number with 1 after receiving _slotBegins self message
     updateTimeSlotCounter(slotCounter);
-   // sendPacket();
+
+    if(!(txQueue->isEmpty()))
+        sendPacket();
+
 }
 
 void TDMAMac::handleUpperPacket(Packet *packet){
     encapsulate(packet);
+    EV_DETAIL << "TDMA received a message from upper layer, name is " << packet->getName() << ", CInfo removed, dest mac addr=" << packet->peekAtFront<TDMAMacHeaderBase>()->getDestAddr() << endl;
+    EV_DETAIL << "pkt encapsulated, length: " << packet->getBitLength() << "\n";
     txQueue->pushPacket(packet);
 }
 
 void TDMAMac::handleLowerPacket(Packet *packet){
+    EV << "Received message from lower layer: " << packet->getName() << endl;
+    // handleWithFsm(packet);
 
     if (packet->hasBitError()){
         //EV << "Received " << packet << " contains bit errors or collision, dropping it\n";
@@ -113,23 +116,27 @@ void TDMAMac::handleLowerPacket(Packet *packet){
     EV << "Packet received. Type " << packet->getKind() << endl;
 }
 
-void TDMAMac::encapsulate(Packet *packet)
-{
+void TDMAMac::encapsulate(Packet *packet){
     auto pkt = makeShared<TDMAMacDataFrame>();
     pkt->setChunkLength(b(par("headerLength")));
+
     auto dest = packet->getTag<MacAddressReq>()->getDestAddress();
     pkt->setDestAddr(dest);
     pkt->setNetworkProtocol(ProtocolGroup::ethertype.getProtocolNumber(packet->getTag<PacketProtocolTag>()->getProtocol()));
+
     delete packet->removeControlInfo();                        // delete the control info
 
-
     pkt->setSrcAddr(interfaceEntry->getMacAddress());
-    EV_DETAIL << "pkt encapsulated\n";
+
+    pkt->setType(TDMAMAC_DATA);
+    //encapsulate the network packet
     packet->insertAtFront(pkt);
+    packet->getTag<PacketProtocolTag>()->setProtocol(&Protocol::tdmaMac);
+
+    EV_DETAIL << "pkt encapsulated\n";
 }
 
-void TDMAMac::decapsulate(Packet *packet)
-{
+void TDMAMac::decapsulate(Packet *packet){
     const auto& macHeader = packet->popAtFront<TDMAMacDataFrame>();
     packet->addTagIfAbsent<MacAddressInd>()->setSrcAddress(macHeader->getSrcAddr());
     packet->addTagIfAbsent<InterfaceInd>()->setInterfaceId(interfaceEntry->getInterfaceId());
@@ -137,11 +144,9 @@ void TDMAMac::decapsulate(Packet *packet)
     packet->addTagIfAbsent<DispatchProtocolReq>()->setProtocol(payloadProtocol);
     packet->addTagIfAbsent<PacketProtocolTag>()->setProtocol(payloadProtocol);
     EV_DETAIL << " message decapsulated " << endl;
-
 }
 
-void TDMAMac::receiveSignal(cComponent *source, simsignal_t signalID, intval_t value, cObject *details)
-{
+void TDMAMac::receiveSignal(cComponent *source, simsignal_t signalID, intval_t value, cObject *details){
     //Enter_Method_Silent();
     if (signalID == IRadio::transmissionStateChangedSignal){
         IRadio::TransmissionState newRadioTransmissionState = static_cast<IRadio::TransmissionState>(value);
@@ -181,14 +186,16 @@ void TDMAMac::configureInterfaceEntry(){
 
 }
 
+// SENDING DATA FRAME
 void TDMAMac::sendPacket(){
 
     radio->setRadioMode(IRadio::RADIO_MODE_TRANSMITTER);                // setting radio mode to transmitter
-    int x = txQueue->getNumPackets();
-    x++;
     currentTxFrame = txQueue->popPacket();
-    take(currentTxFrame);                                               // to take the ownership of the packet
-    sendDown(currentTxFrame);
+    EV << "sending Data frame " << currentTxFrame->getName() << endl;
+    //take(currentTxFrame);                                               // to take the ownership of the packet
+    // auto hdr = currentTxFrame->peekAtFront<TDMAMacHeaderBase>();
+    sendDown(currentTxFrame->dup());
+
 }
 
 void TDMAMac::updateTimeSlotCounter(int &slotCounter){

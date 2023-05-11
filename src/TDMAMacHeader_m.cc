@@ -210,6 +210,7 @@ inline std::ostream& operator<<(std::ostream& out, const std::vector<T,A>& vec)
 EXECUTE_ON_STARTUP(
     omnetpp::cEnum *e = omnetpp::cEnum::find("inet::TDMAMacTypes");
     if (!e) omnetpp::enums.getInstance()->add(e = new omnetpp::cEnum("inet::TDMAMacTypes"));
+    e->insert(TDMAMAC_DATA, "TDMAMAC_DATA");
     e->insert(SLOT_BEGINS, "SLOT_BEGINS");
 )
 

@@ -1,14 +1,14 @@
 version 2
-run General-0-20230511-15:20:55-581
+run General-0-20230511-17:00:27-9213
 attr configname General
-attr datetime 20230511-15:20:55
+attr datetime 20230511-17:00:27
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvarsf ""
 attr measurement ""
 attr network src.Network
-attr processid 581
+attr processid 9213
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -48,24 +48,24 @@ param *.host3.numApps 1
 param *.host3.app[0].typename "\"UdpSink\""
 param *.host3.app[0].localPort 1000
 
-scalar Network.radioMedium.propagation "Arrival computation count" 0
-scalar Network.radioMedium "transmission count" 0
-scalar Network.radioMedium "signal send count" 0
-scalar Network.radioMedium "reception computation count" 0
-scalar Network.radioMedium "interference computation count" 5
-scalar Network.radioMedium "reception decision computation count" 0
-scalar Network.radioMedium "listening decision computation count" 5
-scalar Network.radioMedium "reception cache hit" -nan
+scalar Network.radioMedium.propagation "Arrival computation count" 12
+scalar Network.radioMedium "transmission count" 3
+scalar Network.radioMedium "signal send count" 12
+scalar Network.radioMedium "reception computation count" 12
+scalar Network.radioMedium "interference computation count" 40
+scalar Network.radioMedium "reception decision computation count" 9
+scalar Network.radioMedium "listening decision computation count" 19
+scalar Network.radioMedium "reception cache hit" 84
 attr unit %
-scalar Network.radioMedium "interference cache hit" -nan
+scalar Network.radioMedium "interference cache hit" 66.666666666667
 attr unit %
-scalar Network.radioMedium "noise cache hit" -nan
+scalar Network.radioMedium "noise cache hit" 0
 attr unit %
-scalar Network.radioMedium "snir cache hit" -nan
+scalar Network.radioMedium "snir cache hit" 50
 attr unit %
-scalar Network.radioMedium "reception decision cache hit" -nan
+scalar Network.radioMedium "reception decision cache hit" 50
 attr unit %
-scalar Network.radioMedium "reception result cache hit" -nan
+scalar Network.radioMedium "reception result cache hit" 0
 attr unit %
 scalar Network.host1.lo[0].lo rcvdPkFromHl:count 0
 attr interpolationmode none
@@ -83,39 +83,93 @@ scalar Network.host1.lo[0].lo passedUpPk:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetSentToUpper
 attr title "packets passed to higher layer, sum(packetBytes)"
-scalar Network.host1.wlan[0].mac.queue packetPopped:count 0
+scalar Network.host1.wlan[0].mac.queue packetPopped:count 3
 attr interpolationmode none
 attr title "packet popped, count"
-scalar Network.host1.wlan[0].mac.queue packetPopped:sum(packetBytes) 0
+scalar Network.host1.wlan[0].mac.queue packetPopped:sum(packetBytes) 120
 attr interpolationmode none
 attr title "packet popped, sum(packetBytes)"
 statistic Network.host1.wlan[0].mac.queue queueingTime:histogram
-field count 0
-field mean -nan
-field stddev -nan
-field min -nan
-field max -nan
-field sum 0
-field sqrsum 0
+field count 3
+field mean 0.05
+field stddev 0
+field min 0.05
+field max 0.05
+field sum 0.15
+field sqrsum 0.0075
 attr interpolationmode none
 attr source queueingTime(packetPopped)
 attr title "queueing times, histogram"
 attr unit s
 bin	-inf	0
 bin	0	0
-bin	1	0
-scalar Network.host1.wlan[0].mac.queue queueLength:max 5
+bin	0.01	0
+bin	0.02	0
+bin	0.03	0
+bin	0.04	3
+bin	0.05	0
+bin	0.06	0
+bin	0.07	0
+bin	0.08	0
+bin	0.09	0
+bin	0.1	0
+bin	0.11	0
+bin	0.12	0
+bin	0.13	0
+bin	0.14	0
+bin	0.15	0
+bin	0.16	0
+bin	0.17	0
+bin	0.18	0
+bin	0.19	0
+bin	0.2	0
+bin	0.21	0
+bin	0.22	0
+bin	0.23	0
+bin	0.24	0
+bin	0.25	0
+bin	0.26	0
+bin	0.27	0
+bin	0.28	0
+bin	0.29	0
+bin	0.3	0
+bin	0.31	0
+bin	0.32	0
+bin	0.33	0
+bin	0.34	0
+bin	0.35	0
+bin	0.36	0
+bin	0.37	0
+bin	0.38	0
+bin	0.39	0
+bin	0.4	0
+bin	0.41	0
+bin	0.42	0
+bin	0.43	0
+bin	0.44	0
+bin	0.45	0
+bin	0.46	0
+bin	0.47	0
+bin	0.48	0
+bin	0.49	0
+bin	0.5	0
+bin	0.51	0
+bin	0.52	0
+bin	0.53	0
+bin	0.54	0
+bin	0.55	0
+scalar Network.host1.wlan[0].mac.queue queueLength:max 1
 attr interpolationmode sample-hold
 attr source "count(packetPushed) - count(packetPopped) - count(packetRemoved) - count(packetDropped)"
 attr title "queue length, max"
-scalar Network.host1.wlan[0].mac.queue queueLength:timeavg 2.9977832003401
+scalar Network.host1.wlan[0].mac.queue queueLength:timeavg 0.56206902830807
 attr interpolationmode sample-hold
 attr source "count(packetPushed) - count(packetPopped) - count(packetRemoved) - count(packetDropped)"
 attr title "queue length, timeavg"
-scalar Network.host1.wlan[0].mac.queue packetPushed:count 5
+scalar Network.host1.wlan[0].mac.queue packetPushed:count 3
 attr interpolationmode none
 attr title "packet pushed, count"
-scalar Network.host1.wlan[0].mac.queue packetPushed:sum(packetBytes) 200
+scalar Network.host1.wlan[0].mac.queue packetPushed:sum(packetBytes) 120
 attr interpolationmode none
 attr title "packet pushed, sum(packetBytes)"
 scalar Network.host1.wlan[0].mac.queue packetDropQueueOverflow:count 0
@@ -132,15 +186,15 @@ attr title "packets removed, count"
 scalar Network.host1.wlan[0].mac.queue packetRemoved:sum(packetBytes) 0
 attr interpolationmode none
 attr title "packets removed, sum(packetBytes)"
-scalar Network.host1.wlan[0].radio radioMode:count 3
+scalar Network.host1.wlan[0].radio radioMode:count 4
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Network.host1.wlan[0].radio receptionState:count 1
+scalar Network.host1.wlan[0].radio receptionState:count 2
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
-scalar Network.host1.wlan[0].radio transmissionState:count 0
+scalar Network.host1.wlan[0].radio transmissionState:count 7
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, count"
@@ -252,11 +306,11 @@ scalar Network.host1.udp packetReceived:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
-scalar Network.host1.udp packetSent:count 5
+scalar Network.host1.udp packetSent:count 3
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Network.host1.udp packetSent:sum(packetBytes) 90
+scalar Network.host1.udp packetSent:sum(packetBytes) 54
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -272,7 +326,7 @@ scalar Network.host1.udp droppedPkBadChecksum:count 0
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-scalar Network.host1.app[0] "packets sent" 5
+scalar Network.host1.app[0] "packets sent" 3
 scalar Network.host1.app[0] "packets received" 0
 scalar Network.host1.app[0] packetReceived:count 0
 attr interpolationmode none
@@ -294,11 +348,11 @@ attr interpolationmode none
 attr source dataAge(packetReceived)
 attr title "received packet lifetime, stats"
 attr unit s
-scalar Network.host1.app[0] packetSent:count 5
+scalar Network.host1.app[0] packetSent:count 3
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Network.host1.app[0] packetSent:sum(packetBytes) 50
+scalar Network.host1.app[0] packetSent:sum(packetBytes) 30
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -371,7 +425,7 @@ scalar Network.host2.wlan[0].radio radioMode:count 3
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Network.host2.wlan[0].radio receptionState:count 1
+scalar Network.host2.wlan[0].radio receptionState:count 7
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
@@ -393,44 +447,191 @@ bin	-inf	0
 bin	0	0
 bin	1	0
 statistic Network.host2.wlan[0].radio packetErrorRate:histogram
-field count 0
-field mean -nan
-field stddev -nan
-field min -nan
-field max -nan
+field count 3
+field mean 0
+field stddev 0
+field min 0
+field max 0
 field sum 0
 field sqrsum 0
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	0
-bin	1	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	3
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
 statistic Network.host2.wlan[0].radio bitErrorRate:histogram
-field count 0
-field mean -nan
-field stddev -nan
-field min -nan
-field max -nan
+field count 3
+field mean 0
+field stddev 0
+field min 0
+field max 0
 field sum 0
 field sqrsum 0
 attr source bitErrorRate(packetSentToUpper)
 attr title "Bit error rate, histogram"
 bin	-inf	0
-bin	0	0
-bin	1	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	3
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
 statistic Network.host2.wlan[0].radio symbolErrorRate:histogram
-field count 0
-field mean -nan
-field stddev -nan
-field min -nan
-field max -nan
+field count 3
+field mean 0
+field stddev 0
+field min 0
+field max 0
 field sum 0
 field sqrsum 0
 attr source symbolErrorRate(packetSentToUpper)
 attr title "Symbol error rate, histogram"
 bin	-inf	0
-bin	0	0
-bin	1	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	3
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
 scalar Network.host2.ipv4.ip packetDropAddressResolutionFailed:count 0
 attr interpolationmode none
 attr source packetDropReasonIsAddressResolutionFailed(packetDropped)
@@ -455,11 +656,11 @@ scalar Network.host2.ipv4.ip packetDropForwardingDisabled:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetDropReasonIsForwardingDisabled(packetDropped)
 attr title "packet drop: forwarding disabled, sum(packetBytes)"
-scalar Network.host2.ipv4.ip packetDropNoInterfaceFound:count 50
+scalar Network.host2.ipv4.ip packetDropNoInterfaceFound:count 26
 attr interpolationmode none
 attr source packetDropReasonIsNoInterfaceFound(packetDropped)
 attr title "packet drop: no interface found, count"
-scalar Network.host2.ipv4.ip packetDropNoInterfaceFound:sum(packetBytes) 1900
+scalar Network.host2.ipv4.ip packetDropNoInterfaceFound:sum(packetBytes) 988
 attr interpolationmode none
 attr source packetDropReasonIsNoInterfaceFound(packetDropped)
 attr title "packet drop: no interface found, sum(packetBytes)"
@@ -487,11 +688,11 @@ scalar Network.host2.udp packetReceived:sum(packetBytes) 0
 attr interpolationmode none
 attr source packetReceived
 attr title "packets received, sum(packetBytes)"
-scalar Network.host2.udp packetSent:count 50
+scalar Network.host2.udp packetSent:count 26
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Network.host2.udp packetSent:sum(packetBytes) 900
+scalar Network.host2.udp packetSent:sum(packetBytes) 468
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -507,7 +708,7 @@ scalar Network.host2.udp droppedPkBadChecksum:count 0
 attr interpolationmode none
 attr source packetDropReasonIsIncorrectlyReceived(packetDropped)
 attr title "packets dropped (checksum error), count"
-scalar Network.host2.app[0] "packets sent" 50
+scalar Network.host2.app[0] "packets sent" 26
 scalar Network.host2.app[0] "packets received" 0
 scalar Network.host2.app[0] packetReceived:count 0
 attr interpolationmode none
@@ -529,11 +730,11 @@ attr interpolationmode none
 attr source dataAge(packetReceived)
 attr title "received packet lifetime, stats"
 attr unit s
-scalar Network.host2.app[0] packetSent:count 50
+scalar Network.host2.app[0] packetSent:count 26
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, count"
-scalar Network.host2.app[0] packetSent:sum(packetBytes) 500
+scalar Network.host2.app[0] packetSent:sum(packetBytes) 260
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, sum(packetBytes)"
@@ -606,7 +807,7 @@ scalar Network.host3.wlan[0].radio radioMode:count 3
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Network.host3.wlan[0].radio receptionState:count 1
+scalar Network.host3.wlan[0].radio receptionState:count 7
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
@@ -628,44 +829,191 @@ bin	-inf	0
 bin	0	0
 bin	1	0
 statistic Network.host3.wlan[0].radio packetErrorRate:histogram
-field count 0
-field mean -nan
-field stddev -nan
-field min -nan
-field max -nan
+field count 3
+field mean 0
+field stddev 0
+field min 0
+field max 0
 field sum 0
 field sqrsum 0
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	0
-bin	1	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	3
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
 statistic Network.host3.wlan[0].radio bitErrorRate:histogram
-field count 0
-field mean -nan
-field stddev -nan
-field min -nan
-field max -nan
+field count 3
+field mean 0
+field stddev 0
+field min 0
+field max 0
 field sum 0
 field sqrsum 0
 attr source bitErrorRate(packetSentToUpper)
 attr title "Bit error rate, histogram"
 bin	-inf	0
-bin	0	0
-bin	1	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	3
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
 statistic Network.host3.wlan[0].radio symbolErrorRate:histogram
-field count 0
-field mean -nan
-field stddev -nan
-field min -nan
-field max -nan
+field count 3
+field mean 0
+field stddev 0
+field min 0
+field max 0
 field sum 0
 field sqrsum 0
 attr source symbolErrorRate(packetSentToUpper)
 attr title "Symbol error rate, histogram"
 bin	-inf	0
-bin	0	0
-bin	1	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	3
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
 scalar Network.host3.ipv4.ip packetDropAddressResolutionFailed:count 0
 attr interpolationmode none
 attr source packetDropReasonIsAddressResolutionFailed(packetDropped)
@@ -834,7 +1182,7 @@ scalar Network.host4.wlan[0].radio radioMode:count 3
 attr interpolationmode sample-hold
 attr source radioModeChanged
 attr title "Radio mode, count"
-scalar Network.host4.wlan[0].radio receptionState:count 1
+scalar Network.host4.wlan[0].radio receptionState:count 7
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, count"
@@ -856,44 +1204,191 @@ bin	-inf	0
 bin	0	0
 bin	1	0
 statistic Network.host4.wlan[0].radio packetErrorRate:histogram
-field count 0
-field mean -nan
-field stddev -nan
-field min -nan
-field max -nan
+field count 3
+field mean 0
+field stddev 0
+field min 0
+field max 0
 field sum 0
 field sqrsum 0
 attr source packetErrorRate(packetSentToUpper)
 attr title "Packet error rate, histogram"
 bin	-inf	0
-bin	0	0
-bin	1	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	3
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
 statistic Network.host4.wlan[0].radio bitErrorRate:histogram
-field count 0
-field mean -nan
-field stddev -nan
-field min -nan
-field max -nan
+field count 3
+field mean 0
+field stddev 0
+field min 0
+field max 0
 field sum 0
 field sqrsum 0
 attr source bitErrorRate(packetSentToUpper)
 attr title "Bit error rate, histogram"
 bin	-inf	0
-bin	0	0
-bin	1	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	3
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
 statistic Network.host4.wlan[0].radio symbolErrorRate:histogram
-field count 0
-field mean -nan
-field stddev -nan
-field min -nan
-field max -nan
+field count 3
+field mean 0
+field stddev 0
+field min 0
+field max 0
 field sum 0
 field sqrsum 0
 attr source symbolErrorRate(packetSentToUpper)
 attr title "Symbol error rate, histogram"
 bin	-inf	0
-bin	0	0
-bin	1	0
+bin	-0.5	0
+bin	-0.48	0
+bin	-0.46	0
+bin	-0.44	0
+bin	-0.42	0
+bin	-0.4	0
+bin	-0.38	0
+bin	-0.36	0
+bin	-0.34	0
+bin	-0.32	0
+bin	-0.3	0
+bin	-0.28	0
+bin	-0.26	0
+bin	-0.24	0
+bin	-0.22	0
+bin	-0.2	0
+bin	-0.18	0
+bin	-0.16	0
+bin	-0.14	0
+bin	-0.12	0
+bin	-0.1	0
+bin	-0.08	0
+bin	-0.06	0
+bin	-0.04	0
+bin	-0.02	0
+bin	0	3
+bin	0.02	0
+bin	0.04	0
+bin	0.06	0
+bin	0.08	0
+bin	0.1	0
+bin	0.12	0
+bin	0.14	0
+bin	0.16	0
+bin	0.18	0
+bin	0.2	0
+bin	0.22	0
+bin	0.24	0
+bin	0.26	0
+bin	0.28	0
+bin	0.3	0
+bin	0.32	0
+bin	0.34	0
+bin	0.36	0
+bin	0.38	0
+bin	0.4	0
+bin	0.42	0
+bin	0.44	0
+bin	0.46	0
+bin	0.48	0
+bin	0.5	0
 scalar Network.host4.ipv4.ip packetDropAddressResolutionFailed:count 0
 attr interpolationmode none
 attr source packetDropReasonIsAddressResolutionFailed(packetDropped)
