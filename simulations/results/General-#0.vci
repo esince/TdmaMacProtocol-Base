@@ -1,15 +1,15 @@
-file 7915843 1683894517                                         
+file 8297 1683910269                                            
 version 2
-run General-0-20230512-15:28:00-14995
+run General-0-20230512-19:50:53-30692
 attr configname General
-attr datetime 20230512-15:28:00
+attr datetime 20230512-19:50:53
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvarsf ""
 attr measurement ""
 attr network src.Network
-attr processid 14995
+attr processid 30692
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -38,23 +38,33 @@ param *.visualizer.*.physicalLinkVisualizer.displayLinks true
 param *.visualizer.*.mediumVisualizer.displaySignals true
 param *.host1.numApps 1
 param *.host1.app[0].typename "\"UdpBasicApp\""
-param *.host1.app[0].destAddresses "\"\""
-param *.host1.app[0].localPort 1000
+param *.host1.app[0].destAddresses "\"host3\""
 param *.host1.app[0].destPort 1000
-param *.host1.app[0].sendInterval 0ms
+param *.host1.app[0].sendInterval 2000ms
 param *.host1.app[0].startTime 0
 param *.host1.app[0].messageLength 10Byte
+param **.host1.wlan[*].mac.slotNumbers "\"1\""
 param *.host2.numApps 1
 param *.host2.app[0].typename "\"UdpBasicApp\""
-param *.host2.app[0].destAddresses "\"255.255.255.255\""
+param *.host2.app[0].destAddresses "\"host4\""
 param *.host2.app[0].localPort 1000
 param *.host2.app[0].destPort 1000
-param *.host2.app[0].sendInterval 10ms
+param *.host2.app[0].sendInterval 1000ms
 param *.host2.app[0].startTime exponential(12ms)
 param *.host2.app[0].messageLength 10Byte
+param **.host2.wlan[*].mac.slotNumbers "\"2\""
 param *.host3.numApps 1
 param *.host3.app[0].typename "\"UdpSink\""
 param *.host3.app[0].localPort 1000
+param *.host3.wlan[*].mac.slotNumbers "\"3,4\""
+param *.host4.numApps 1
+param *.host4.app[0].typename "\"UdpSink\""
+param *.host4.app[0].localPort 1000
+param *.host4.wlan[*].mac.slotNumbers "\"5,7\""
+param *.host5.numApps 1
+param *.host5.app[0].typename "\"UdpSink\""
+param *.host5.app[0].localPort 1000
+param *.host5.wlan[*].mac.slotNumbers "\"6\""
 
 vector 0 Network.host1.wlan[0].radio radioMode:vector ETV
 attr interpolationmode sample-hold
@@ -96,140 +106,123 @@ vector 9 Network.host5.wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, vector"
-vector 10 Network.host2.app[0] packetSent:vector(packetBytes) ETV
+0	4166 24 0 0 0 0 3 0 2 2 4
+1	4190 24 0 0 0 0 3 0 2 2 4
+2	4214 24 0 0 0 0 3 0 2 2 4
+3	4238 24 0 0 0 0 3 0 2 2 4
+4	4262 24 0 0 0 0 3 0 2 2 4
+5	4286 8 0 0 0 0 1 1 1 1 1
+6	4294 8 0 0 0 0 1 1 1 1 1
+7	4302 8 0 0 0 0 1 1 1 1 1
+8	4310 8 0 0 0 0 1 1 1 1 1
+9	4318 8 0 0 0 0 1 1 1 1 1
+vector 10 Network.host1.app[0] packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, vector(packetBytes)"
-vector 11 Network.host2.udp packetSent:vector(packetBytes) ETV
+10	4490 10 6 6 0 0 1 10 10 10 100
+vector 11 Network.host1.udp packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, vector(packetBytes)"
-vector 12 Network.host2.lo[0].lo rcvdPkFromHl:vector(packetBytes) ETV
-attr interpolationmode none
-attr source packetReceivedFromUpper
-attr title "packets received from higher layer, vector(packetBytes)"
-vector 13 Network.host2.lo[0].lo passedUpPk:vector(packetBytes) ETV
-attr interpolationmode none
-attr source packetSentToUpper
-attr title "packets passed to higher layer, vector(packetBytes)"
-vector 14 Network.host2.wlan[0].mac.queue packetPushed:vector(packetBytes) ETV
+11	4661 11 11 11 0 0 1 18 18 18 324
+vector 12 Network.host1.wlan[0].mac.queue packetPushed:vector(packetBytes) ETV
 attr interpolationmode none
 attr title "packet pushed, vector(packetBytes)"
-vector 15 Network.host2.wlan[0].mac.queue queueLength:vector ETV
+vector 13 Network.host1.wlan[0].mac.queue queueLength:vector ETV
 attr interpolationmode sample-hold
 attr source "count(packetPushed) - count(packetPopped) - count(packetRemoved) - count(packetDropped)"
 attr title "queue length, vector"
-vector 16 Network.host2.udp packetReceived:vector(packetBytes) ETV
+12	5063 11 16 16 0 0 1 40 40 40 1600
+13	5074 10 16 16 0 0 1 1 1 1 1
+vector 14 Network.host2.app[0] packetSent:vector(packetBytes) ETV
 attr interpolationmode none
-attr source packetReceived
-attr title "packets received, vector(packetBytes)"
-vector 17 Network.host2.udp droppedPkWrongPort:vector(count) ETV
+attr source packetSent
+attr title "packets sent, vector(packetBytes)"
+14	5248 23 17 17 0.00944641368 0.00944641368 1 10 10 10 100
+vector 15 Network.host2.udp packetSent:vector(packetBytes) ETV
 attr interpolationmode none
-attr source packetDropReasonIsNoPortFound(packetDropped)
-attr title "packets dropped (wrong port), vector(count)"
-vector 18 Network.host2.wlan[0].radio transmissionState:vector ETV
+attr source packetSent
+attr title "packets sent, vector(packetBytes)"
+15	5432 23 19 19 0.00944641368 0.00944641368 1 18 18 18 324
+vector 16 Network.host2.wlan[0].mac.queue packetPushed:vector(packetBytes) ETV
+attr interpolationmode none
+attr title "packet pushed, vector(packetBytes)"
+vector 17 Network.host2.wlan[0].mac.queue queueLength:vector ETV
+attr interpolationmode sample-hold
+attr source "count(packetPushed) - count(packetPopped) - count(packetRemoved) - count(packetDropped)"
+attr title "queue length, vector"
+16	5846 23 21 21 0.00944641368 0.00944641368 1 40 40 40 1600
+17	5869 22 21 21 0.00944641368 0.00944641368 1 1 1 1 1
+vector 18 Network.host1.wlan[0].radio transmissionState:vector ETV
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
 attr title "Radio transmission state, vector"
-vector 19 Network.host2.wlan[0].mac.queue packetPopped:vector(packetBytes) ETV
+vector 19 Network.host1.wlan[0].mac.queue packetPopped:vector(packetBytes) ETV
 attr interpolationmode none
 attr title "packet popped, vector(packetBytes)"
-vector 20 Network.host2.wlan[0].mac.queue queueingTime:vector ETV
+vector 20 Network.host1.wlan[0].mac.queue queueingTime:vector ETV
 attr interpolationmode none
 attr source queueingTime(packetPopped)
 attr title "queueing times, vector"
 attr unit s
-vector 21 Network.host3.udp packetReceived:vector(packetBytes) ETV
+0	6412 12 22 22 0.05 0.05 1 3 3 3 9
+5	6424 12 22 22 0.05 0.05 1 0 0 0 0
+13	6436 13 22 22 0.05 0.05 1 0 0 0 0
+18	6449 13 22 22 0.05 0.05 1 1 1 1 1
+19	6462 14 22 22 0.05 0.05 1 40 40 40 1600
+20	6476 16 22 22 0.05 0.05 1 0.05 0.05 0.05 0.0025
+vector 21 Network.host2.wlan[0].radio transmissionState:vector ETV
+attr interpolationmode sample-hold
+attr source transmissionStateChanged
+attr title "Radio transmission state, vector"
+vector 22 Network.host2.wlan[0].mac.queue packetPopped:vector(packetBytes) ETV
 attr interpolationmode none
-attr source packetReceived
-attr title "packets received, vector(packetBytes)"
-vector 22 Network.host3.udp droppedPkWrongPort:vector(count) ETV
+attr title "packet popped, vector(packetBytes)"
+vector 23 Network.host2.wlan[0].mac.queue queueingTime:vector ETV
 attr interpolationmode none
-attr source packetDropReasonIsNoPortFound(packetDropped)
-attr title "packets dropped (wrong port), vector(count)"
-vector 23 Network.host4.udp packetReceived:vector(packetBytes) ETV
-attr interpolationmode none
-attr source packetReceived
-attr title "packets received, vector(packetBytes)"
-vector 24 Network.host4.udp droppedPkWrongPort:vector(count) ETV
-attr interpolationmode none
-attr source packetDropReasonIsNoPortFound(packetDropped)
-attr title "packets dropped (wrong port), vector(count)"
-vector 25 Network.host1.udp packetReceived:vector(packetBytes) ETV
-attr interpolationmode none
-attr source packetReceived
-attr title "packets received, vector(packetBytes)"
-vector 26 Network.host1.udp droppedPkWrongPort:vector(count) ETV
-attr interpolationmode none
-attr source packetDropReasonIsNoPortFound(packetDropped)
-attr title "packets dropped (wrong port), vector(count)"
-vector 27 Network.host2.wlan[0].mac.queue packetDropQueueOverflow:vector(packetBytes) ETV
-attr interpolationmode none
-attr source packetDropReasonIsQueueOverflow(packetDropped)
-attr title "packet drops: queue overflow, vector(packetBytes)"
-0	7149 24 0 0 0 0 3 0 2 2 4
-1	7173 36 0 47 0 0.05 4 0 3 5 13
-2	7209 24 0 0 0 0 3 0 2 2 4
-3	7233 24 0 0 0 0 3 0 2 2 4
-4	7257 24 0 0 0 0 3 0 2 2 4
-5	7281 443 0 593 0 0.500000302497 20 1 3 40 100
-6	7724 20 0 47 0 0.05 2 0 1 1 1
-7	7744 443 0 591 0 0.500000134918 20 1 3 40 100
-8	8187 443 0 592 0 0.500000275973 20 1 3 40 100
-9	8630 8 0 0 0 0 1 1 1 1 1
-10	8638 1190 10 578 0.00944641368 0.49944641368 50 10 10 500 5000
-11	9828 1190 12 579 0.00944641368 0.49944641368 50 18 18 900 16200
-12	11018 1191 14 581 0.00944641368 0.49944641368 50 38 38 1900 72200
-13	12209 1191 14 581 0.00944641368 0.49944641368 50 38 38 1900 72200
-14	13400 1191 15 582 0.00944641368 0.49944641368 50 40 40 2000 80000
-15	14591 1826 15 586 0.00944641368 0.5 81 1 21 1369 25741
-16	16417 1191 17 584 0.00944641368 0.49944641368 50 18 18 900 16200
-17	17608 1182 17 584 0.00944641368 0.49944641368 50 1 50 1275 42925
-18	18790 362 47 590 0.05 0.5 20 1 2 30 50
-19	19152 144 47 586 0.05 0.5 10 40 40 400 16000
-20	19296 254 47 586 0.05 0.5 10 0.04055358632 0.40055358632 2.2055358632 0.61843884438614
-21	19550 224 67 546 0.066870968252 0.466870968252 9 18 18 162 2916
-22	19774 215 67 546 0.066870968252 0.466870968252 9 1 9 45 285
-23	19989 224 71 550 0.066871109307 0.466871109307 9 18 18 162 2916
-24	20213 215 71 550 0.066871109307 0.466871109307 9 1 9 45 285
-25	20428 224 75 554 0.066871135831 0.466871135831 9 18 18 162 2916
-26	20652 215 75 554 0.066871135831 0.466871135831 9 1 9 45 285
-27	20867 504 282 582 0.24944641368 0.49944641368 21 40 40 840 33600
-15	21371 878823 599 197202 0.50944641368 164.34944641368 32768 19 21 665192 13516864
-5	900194 232271 611 258011 0.516871135831 215.016871135831 8581 1 3 17161 42901
-7	1132465 232271 603 258003 0.516870968252 215.016870968252 8581 1 3 17161 42901
-8	1364736 232271 607 258007 0.516871109307 215.016871109307 8581 1 3 17161 42901
-10	1597007 602190 595 258038 0.50944641368 215.04944641368 21455 10 10 214550 2145500
-11	2199197 602190 596 258039 0.50944641368 215.04944641368 21455 18 18 386190 6951420
-12	2801387 602193 598 258041 0.50944641368 215.04944641368 21455 38 38 815290 30981020
-13	3403580 602193 598 258041 0.50944641368 215.04944641368 21455 38 38 815290 30981020
-14	4005773 602193 599 258042 0.50944641368 215.04944641368 21455 40 40 858200 34328000
-15	4607966 284374 197202 258046 164.34944641368 215.05 10142 19 21 205881 4183511
-16	4892340 602193 601 258044 0.50944641368 215.04944641368 21455 18 18 386190 6951420
-17	5494533 655611 601 258044 0.50944641368 215.04944641368 21455 51 21505 231241990 3315334647380
-18	6150144 195377 602 258002 0.516870833334 215.016870833334 8581 1 2 12871 21451
-19	6345521 79249 646 258046 0.55 215.05 4291 40 40 171640 6865600
-20	6424770 126450 646 258046 0.55 215.05 4291 0.44055358632 0.99055358632 4246.4054388989 4203.8118889101
-21	6551220 124729 606 258006 0.516870968252 215.016870968252 4291 18 18 77238 1390284
-22	6675949 132231 606 258006 0.516870968252 215.016870968252 4291 10 4300 9247105 26511578765
-23	6808180 124729 610 258010 0.516871109307 215.016871109307 4291 18 18 77238 1390284
-24	6932909 132231 610 258010 0.516871109307 215.016871109307 4291 10 4300 9247105 26511578765
-25	7065140 124729 614 258014 0.516871135831 215.016871135831 4291 18 18 77238 1390284
-26	7189869 132231 614 258014 0.516871135831 215.016871135831 4291 10 4300 9247105 26511578765
-27	7322100 481755 621 258042 0.51944641368 215.04944641368 17164 40 40 686560 27462400
-vector 28 Network.host1.app[0] throughput:vector ETV
+attr source queueingTime(packetPopped)
+attr title "queueing times, vector"
+attr unit s
+1	7013 12 23 23 0.05 0.05 1 3 3 3 9
+6	7025 12 23 23 0.05 0.05 1 0 0 0 0
+17	7037 13 23 23 0.05 0.05 1 0 0 0 0
+21	7050 13 23 23 0.05 0.05 1 1 1 1 1
+22	7063 14 23 23 0.05 0.05 1 40 40 40 1600
+23	7077 25 23 23 0.05 0.05 1 0.04055358632 0.04055358632 0.04055358632 0.0016445933634137
+18	7102 13 27 27 0.05 0.05 1 2 2 2 4
+7	7115 22 29 29 0.050000134918 0.050000134918 1 3 3 3 9
+8	7137 22 30 30 0.050000169987 0.050000169987 1 3 3 3 9
+21	7159 13 28 28 0.05 0.05 1 2 2 2 4
+18	7172 23 37 37 0.066870833334 0.066870833334 1 1 1 1 1
+7	7195 22 39 39 0.066870968252 0.066870968252 1 2 2 2 4
+21	7217 23 38 38 0.066870833334 0.066870833334 1 1 1 1 1
+8	7240 22 41 41 0.066871003321 0.066871003321 1 2 2 2 4
+7	7262 22 43 43 0.066871089028 0.066871089028 1 1 1 1 1
+8	7284 22 44 44 0.066871109307 0.066871109307 1 1 1 1 1
+vector 24 Network.host1.app[0] throughput:vector ETV
 attr source throughput(packetReceived)
 attr title "throughput, vector"
 attr unit bps
-vector 29 Network.host2.app[0] throughput:vector ETV
+vector 25 Network.host2.app[0] throughput:vector ETV
 attr source throughput(packetReceived)
 attr title "throughput, vector"
 attr unit bps
-vector 30 Network.host3.app[0] throughput:vector ETV
+vector 26 Network.host3.app[0] throughput:vector ETV
 attr source throughput(packetReceived)
 attr title "throughput, vector"
 attr unit bps
-28	7804269 37191 258048 258048 0.1 215.05 2151 0 0 0 0
-29	7841460 37191 258048 258048 0.1 215.05 2151 0 0 0 0
-30	7878651 37191 258048 258048 0.1 215.05 2151 0 0 0 0
+vector 27 Network.host4.app[0] throughput:vector ETV
+attr source throughput(packetReceived)
+attr title "throughput, vector"
+attr unit bps
+vector 28 Network.host5.app[0] throughput:vector ETV
+attr source throughput(packetReceived)
+attr title "throughput, vector"
+attr unit bps
+24	7996 60 91 91 0.1 0.5 5 0 0 0 0
+25	8056 60 91 91 0.1 0.5 5 0 0 0 0
+26	8116 60 91 91 0.1 0.5 5 0 0 0 0
+27	8176 60 91 91 0.1 0.5 5 0 0 0 0
+28	8236 60 91 91 0.1 0.5 5 0 0 0 0
 

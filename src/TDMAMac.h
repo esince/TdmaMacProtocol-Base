@@ -41,8 +41,12 @@ class TDMAMac : public MacProtocolBase, public IMacProtocol
 
     void scheduleTimeSlots();
     void updateTimeSlotCounter(int &currentSlotCounter);
+    void printAssignedTimeSlots();
 
     int slotCounter;
+    std::vector<int> slotNumbersVector;
+
+
 
     double slotDuration;
     double bitrate;
@@ -79,7 +83,6 @@ public:
     virtual void decapsulate(Packet *);
 
     void sendPacket();
-
 
 };
 

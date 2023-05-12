@@ -26,7 +26,8 @@ void TDMAMac::initialize(int stage){
     MacProtocolBase::initialize(stage);
 
     slotCounter = -1;
-    updateTimeSlotCounter(slotCounter);
+
+
 
     /* This initStages mechanism is used for scheduling
      * the initialization of modules and their submodules
@@ -60,6 +61,17 @@ void TDMAMac::initialize(int stage){
         // setting radio mode to Rx
         radio->setRadioMode(IRadio::RADIO_MODE_RECEIVER);
 
+        // assign slots that given in configuration file while network is up
+        std::string slotNumbers = par("slotNumbers");
+        std::stringstream tokenizer(slotNumbers);
+        std::string token;
+
+        while (std::getline(tokenizer, token, ',')) {
+            int slotNumber = std::stoi(token);
+            slotNumbersVector.push_back(slotNumber);
+        }
+
+
         // scheduling self event for the current slot
         scheduleAt(simTime(), slotBeginsEvent);
     }
@@ -82,8 +94,11 @@ void TDMAMac::handleSelfMessage(cMessage *msg){
     // scheduling self event for the next slot
     scheduleAt(simTime() + slotDuration, slotBeginsEvent);
 
+
     // increase slot number with 1 after receiving _slotBegins self message
     updateTimeSlotCounter(slotCounter);
+
+    printAssignedTimeSlots();
 
     if(!(txQueue->isEmpty()))
         sendPacket();
@@ -92,13 +107,12 @@ void TDMAMac::handleSelfMessage(cMessage *msg){
 
 void TDMAMac::handleUpperPacket(Packet *packet){
     encapsulate(packet);
-    EV_DETAIL << "TDMA received a message from upper layer, name is " << packet->getName() << ", CInfo removed, dest mac addr=" << packet->peekAtFront<TDMAMacHeaderBase>()->getDestAddr() << endl;
-    EV_DETAIL << "pkt encapsulated, length: " << packet->getBitLength() << "\n";
+    EV << getContainingNode(this)->getFullName() << " received a message from upper layer, name is " << packet->getName() << ", dest mac addr=" << packet->peekAtFront<TDMAMacHeaderBase>()->getDestAddr() << endl;
     txQueue->pushPacket(packet);
 }
 
 void TDMAMac::handleLowerPacket(Packet *packet){
-    EV << "Received message from lower layer: " << packet->getName() << endl;
+    EV << getContainingNode(this)->getFullName() << " received a message from lower layer: " << packet->getName() << endl;
     // handleWithFsm(packet);
 
     if (packet->hasBitError()){
@@ -113,7 +127,8 @@ void TDMAMac::handleLowerPacket(Packet *packet){
     const auto& hdr = packet->peekAtFront<TDMAMacHeaderBase>();
     packet->setKind(hdr->getType());
 
-    EV << "Packet received. Type " << packet->getKind() << endl;
+    EV << "Received packet type " << packet->getFullName() << endl;
+    // to send the packet to upper layers
     decapsulate(packet);
     sendUp(packet);
 }
@@ -135,7 +150,7 @@ void TDMAMac::encapsulate(Packet *packet){
     packet->insertAtFront(pkt);
     packet->getTag<PacketProtocolTag>()->setProtocol(&Protocol::tdmaMac);
 
-    EV_DETAIL << "pkt encapsulated\n";
+    EV_DETAIL << "message encapsulated\n";
 }
 
 void TDMAMac::decapsulate(Packet *packet){
@@ -188,12 +203,10 @@ void TDMAMac::configureInterfaceEntry(){
 
 }
 
-// SENDING DATA FRAME
+// sends Data Frame
 void TDMAMac::sendPacket(){
-
     radio->setRadioMode(IRadio::RADIO_MODE_TRANSMITTER);                // setting radio mode to transmitter
     currentTxFrame = txQueue->popPacket();
-    EV << "sending Data frame " << currentTxFrame->getName() << endl;
     //take(currentTxFrame);                                               // to take the ownership of the packet
     // auto hdr = currentTxFrame->peekAtFront<TDMAMacHeaderBase>();
     sendDown(currentTxFrame->dup());
@@ -203,9 +216,17 @@ void TDMAMac::sendPacket(){
 void TDMAMac::updateTimeSlotCounter(int &slotCounter){
     slotCounter++;
     if(slotCounter == par("frameLength").intValue()){
-        EV << "NEW FRAME STARTING\n";
+        EV << "New frame with length " << par("frameLength").intValue() << " has just started.\n";
         slotCounter = 0;
         // TODO - scheduling the slots in every new frame starts
     }
     EV << "Slot: [" << slotCounter << "]" << std::endl;
+}
+
+void TDMAMac::printAssignedTimeSlots(){
+    EV << "Assigned time slots of " << getContainingNode(this)->getFullName() << ": ";
+    for (int slot : slotNumbersVector) {
+        EV << slot << " ";
+    }
+    EV << endl;
 }

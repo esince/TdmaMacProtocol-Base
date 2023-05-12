@@ -39,8 +39,8 @@ module TDMAMac extends MacProtocolBase like IMacProtocol
         double bitrate @unit(bps) = default(19200bps); 
         int mtu @unit(B) = default(0B);
         
-        int frameLength = default(4);
-        
+        int frameLength = default(8);
+        string slotNumbers = default("0");
         int assignedSlot = default(-1);
   	
    submodules:
