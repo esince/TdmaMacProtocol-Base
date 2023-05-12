@@ -30,7 +30,7 @@ PROJECTRELATIVE_PATH =
 O = $(PROJECT_OUTPUT_DIR)/$(CONFIGNAME)/$(PROJECTRELATIVE_PATH)
 
 # Object files for local .cc, .msg and .sm files
-OBJS = $O/src/TDMAMac.o $O/src/TDMAMacHeader_m.o
+OBJS = $O/src/TDMAMac.o $O/src/TIB.o $O/src/TDMAMacHeader_m.o
 
 # Message files
 MSGFILES = \

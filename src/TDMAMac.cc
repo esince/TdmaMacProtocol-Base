@@ -50,6 +50,8 @@ void TDMAMac::initialize(int stage){
         _timeout = new cMessage("_TIMEOUT");
         slotBeginsEvent = new cMessage("SLOT_BEGINS");
 
+        topologyInfo.setFrameLength(par("frameLength").intValue());
+
         cModule *radioModule = getModuleFromPar<cModule>(par("radioModule"), this);
         //whenever the radio mode changes, handleRadioModeChanged() function of the current module will be called.
         radioModule->subscribe(IRadio::radioModeChangedSignal, this);
@@ -61,6 +63,8 @@ void TDMAMac::initialize(int stage){
         // setting radio mode to Rx
         radio->setRadioMode(IRadio::RADIO_MODE_RECEIVER);
 
+
+
         // assign slots that given in configuration file while network is up
         std::string slotNumbers = par("slotNumbers");
         std::stringstream tokenizer(slotNumbers);
@@ -69,8 +73,8 @@ void TDMAMac::initialize(int stage){
         while (std::getline(tokenizer, token, ',')) {
             int slotNumber = std::stoi(token);
             slotNumbersVector.push_back(slotNumber);
+            topologyInfo.setSlotAssignment(slotNumber, getContainingNode(this)->getId());
         }
-
 
         // scheduling self event for the current slot
         scheduleAt(simTime(), slotBeginsEvent);
@@ -99,6 +103,8 @@ void TDMAMac::handleSelfMessage(cMessage *msg){
     updateTimeSlotCounter(slotCounter);
 
     printAssignedTimeSlots();
+
+    topologyInfo.printSlotAssignment();
 
     if(!(txQueue->isEmpty()))
         sendPacket();

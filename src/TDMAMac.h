@@ -30,6 +30,7 @@
 #include "inet/linklayer/common/MacAddressTag_m.h"      // MacAddressInd
 
 #include "TDMAMacHeader_m.h"
+#include "TIB.h"
 
 using namespace omnetpp;
 using namespace inet;
@@ -46,6 +47,7 @@ class TDMAMac : public MacProtocolBase, public IMacProtocol
     int slotCounter;
     std::vector<int> slotNumbersVector;
 
+    TIB topologyInfo;
 
 
     double slotDuration;

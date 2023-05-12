@@ -1,15 +1,15 @@
-file 8297 1683910269                                            
+file 7127 1683917329                                            
 version 2
-run General-0-20230512-19:50:53-30692
+run General-0-20230512-21:47:04-6065
 attr configname General
-attr datetime 20230512-19:50:53
+attr datetime 20230512-21:47:04
 attr experiment General
 attr inifile omnetpp.ini
 attr iterationvars ""
 attr iterationvarsf ""
 attr measurement ""
 attr network src.Network
-attr processid 30692
+attr processid 6065
 attr repetition 0
 attr replication #0
 attr resultdir results
@@ -106,26 +106,26 @@ vector 9 Network.host5.wlan[0].radio receptionState:vector ETV
 attr interpolationmode sample-hold
 attr source receptionStateChanged
 attr title "Radio reception state, vector"
-0	4166 24 0 0 0 0 3 0 2 2 4
-1	4190 24 0 0 0 0 3 0 2 2 4
-2	4214 24 0 0 0 0 3 0 2 2 4
-3	4238 24 0 0 0 0 3 0 2 2 4
-4	4262 24 0 0 0 0 3 0 2 2 4
-5	4286 8 0 0 0 0 1 1 1 1 1
-6	4294 8 0 0 0 0 1 1 1 1 1
-7	4302 8 0 0 0 0 1 1 1 1 1
-8	4310 8 0 0 0 0 1 1 1 1 1
-9	4318 8 0 0 0 0 1 1 1 1 1
+0	4164 24 0 0 0 0 3 0 2 2 4
+1	4188 24 0 0 0 0 3 0 2 2 4
+2	4212 24 0 0 0 0 3 0 2 2 4
+3	4236 24 0 0 0 0 3 0 2 2 4
+4	4260 24 0 0 0 0 3 0 2 2 4
+5	4284 8 0 0 0 0 1 1 1 1 1
+6	4292 8 0 0 0 0 1 1 1 1 1
+7	4300 8 0 0 0 0 1 1 1 1 1
+8	4308 8 0 0 0 0 1 1 1 1 1
+9	4316 8 0 0 0 0 1 1 1 1 1
 vector 10 Network.host1.app[0] packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, vector(packetBytes)"
-10	4490 10 6 6 0 0 1 10 10 10 100
+10	4488 10 6 6 0 0 1 10 10 10 100
 vector 11 Network.host1.udp packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, vector(packetBytes)"
-11	4661 11 11 11 0 0 1 18 18 18 324
+11	4659 11 11 11 0 0 1 18 18 18 324
 vector 12 Network.host1.wlan[0].mac.queue packetPushed:vector(packetBytes) ETV
 attr interpolationmode none
 attr title "packet pushed, vector(packetBytes)"
@@ -133,18 +133,18 @@ vector 13 Network.host1.wlan[0].mac.queue queueLength:vector ETV
 attr interpolationmode sample-hold
 attr source "count(packetPushed) - count(packetPopped) - count(packetRemoved) - count(packetDropped)"
 attr title "queue length, vector"
-12	5063 11 16 16 0 0 1 40 40 40 1600
-13	5074 10 16 16 0 0 1 1 1 1 1
+12	5061 11 16 16 0 0 1 40 40 40 1600
+13	5072 10 16 16 0 0 1 1 1 1 1
 vector 14 Network.host2.app[0] packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, vector(packetBytes)"
-14	5248 23 17 17 0.00944641368 0.00944641368 1 10 10 10 100
+14	5246 23 17 17 0.00944641368 0.00944641368 1 10 10 10 100
 vector 15 Network.host2.udp packetSent:vector(packetBytes) ETV
 attr interpolationmode none
 attr source packetSent
 attr title "packets sent, vector(packetBytes)"
-15	5432 23 19 19 0.00944641368 0.00944641368 1 18 18 18 324
+15	5430 23 19 19 0.00944641368 0.00944641368 1 18 18 18 324
 vector 16 Network.host2.wlan[0].mac.queue packetPushed:vector(packetBytes) ETV
 attr interpolationmode none
 attr title "packet pushed, vector(packetBytes)"
@@ -152,8 +152,8 @@ vector 17 Network.host2.wlan[0].mac.queue queueLength:vector ETV
 attr interpolationmode sample-hold
 attr source "count(packetPushed) - count(packetPopped) - count(packetRemoved) - count(packetDropped)"
 attr title "queue length, vector"
-16	5846 23 21 21 0.00944641368 0.00944641368 1 40 40 40 1600
-17	5869 22 21 21 0.00944641368 0.00944641368 1 1 1 1 1
+16	5844 23 21 21 0.00944641368 0.00944641368 1 40 40 40 1600
+17	5867 22 21 21 0.00944641368 0.00944641368 1 1 1 1 1
 vector 18 Network.host1.wlan[0].radio transmissionState:vector ETV
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
@@ -166,12 +166,12 @@ attr interpolationmode none
 attr source queueingTime(packetPopped)
 attr title "queueing times, vector"
 attr unit s
-0	6412 12 22 22 0.05 0.05 1 3 3 3 9
-5	6424 12 22 22 0.05 0.05 1 0 0 0 0
-13	6436 13 22 22 0.05 0.05 1 0 0 0 0
-18	6449 13 22 22 0.05 0.05 1 1 1 1 1
-19	6462 14 22 22 0.05 0.05 1 40 40 40 1600
-20	6476 16 22 22 0.05 0.05 1 0.05 0.05 0.05 0.0025
+0	6410 12 22 22 0.05 0.05 1 3 3 3 9
+5	6422 12 22 22 0.05 0.05 1 0 0 0 0
+13	6434 13 22 22 0.05 0.05 1 0 0 0 0
+18	6447 13 22 22 0.05 0.05 1 1 1 1 1
+19	6460 14 22 22 0.05 0.05 1 40 40 40 1600
+20	6474 16 22 22 0.05 0.05 1 0.05 0.05 0.05 0.0025
 vector 21 Network.host2.wlan[0].radio transmissionState:vector ETV
 attr interpolationmode sample-hold
 attr source transmissionStateChanged
@@ -184,45 +184,12 @@ attr interpolationmode none
 attr source queueingTime(packetPopped)
 attr title "queueing times, vector"
 attr unit s
-1	7013 12 23 23 0.05 0.05 1 3 3 3 9
-6	7025 12 23 23 0.05 0.05 1 0 0 0 0
-17	7037 13 23 23 0.05 0.05 1 0 0 0 0
-21	7050 13 23 23 0.05 0.05 1 1 1 1 1
-22	7063 14 23 23 0.05 0.05 1 40 40 40 1600
-23	7077 25 23 23 0.05 0.05 1 0.04055358632 0.04055358632 0.04055358632 0.0016445933634137
-18	7102 13 27 27 0.05 0.05 1 2 2 2 4
-7	7115 22 29 29 0.050000134918 0.050000134918 1 3 3 3 9
-8	7137 22 30 30 0.050000169987 0.050000169987 1 3 3 3 9
-21	7159 13 28 28 0.05 0.05 1 2 2 2 4
-18	7172 23 37 37 0.066870833334 0.066870833334 1 1 1 1 1
-7	7195 22 39 39 0.066870968252 0.066870968252 1 2 2 2 4
-21	7217 23 38 38 0.066870833334 0.066870833334 1 1 1 1 1
-8	7240 22 41 41 0.066871003321 0.066871003321 1 2 2 2 4
-7	7262 22 43 43 0.066871089028 0.066871089028 1 1 1 1 1
-8	7284 22 44 44 0.066871109307 0.066871109307 1 1 1 1 1
-vector 24 Network.host1.app[0] throughput:vector ETV
-attr source throughput(packetReceived)
-attr title "throughput, vector"
-attr unit bps
-vector 25 Network.host2.app[0] throughput:vector ETV
-attr source throughput(packetReceived)
-attr title "throughput, vector"
-attr unit bps
-vector 26 Network.host3.app[0] throughput:vector ETV
-attr source throughput(packetReceived)
-attr title "throughput, vector"
-attr unit bps
-vector 27 Network.host4.app[0] throughput:vector ETV
-attr source throughput(packetReceived)
-attr title "throughput, vector"
-attr unit bps
-vector 28 Network.host5.app[0] throughput:vector ETV
-attr source throughput(packetReceived)
-attr title "throughput, vector"
-attr unit bps
-24	7996 60 91 91 0.1 0.5 5 0 0 0 0
-25	8056 60 91 91 0.1 0.5 5 0 0 0 0
-26	8116 60 91 91 0.1 0.5 5 0 0 0 0
-27	8176 60 91 91 0.1 0.5 5 0 0 0 0
-28	8236 60 91 91 0.1 0.5 5 0 0 0 0
+1	7011 12 23 23 0.05 0.05 1 3 3 3 9
+6	7023 12 23 23 0.05 0.05 1 0 0 0 0
+17	7035 13 23 23 0.05 0.05 1 0 0 0 0
+21	7048 13 23 23 0.05 0.05 1 1 1 1 1
+22	7061 14 23 23 0.05 0.05 1 40 40 40 1600
+23	7075 25 23 23 0.05 0.05 1 0.04055358632 0.04055358632 0.04055358632 0.0016445933634137
+18	7100 13 27 27 0.05 0.05 1 2 2 2 4
+21	7113 13 28 28 0.05 0.05 1 2 2 2 4
 
