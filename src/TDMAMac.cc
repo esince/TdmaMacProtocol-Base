@@ -114,6 +114,8 @@ void TDMAMac::handleLowerPacket(Packet *packet){
     packet->setKind(hdr->getType());
 
     EV << "Packet received. Type " << packet->getKind() << endl;
+    decapsulate(packet);
+    sendUp(packet);
 }
 
 void TDMAMac::encapsulate(Packet *packet){

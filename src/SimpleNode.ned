@@ -15,11 +15,11 @@
 
 package src;
 
-import inet.node.inet.WirelessHost;
-
+//import inet.node.inet.WirelessHost;
+import inet.node.inet.AdhocHost;
 // wireless host
 // instead of WirelessHost, INetworkNode can be used
-module SimpleNode extends WirelessHost
+module SimpleNode extends AdhocHost
 {
     parameters:
         wlan[0].typename = default("SimpleWirelessInterface");
