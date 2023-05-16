@@ -27,8 +27,6 @@ void TDMAMac::initialize(int stage){
 
     slotCounter = -1;
 
-
-
     /* This initStages mechanism is used for scheduling
      * the initialization of modules and their submodules
      * in a specific order. Below are predefined stages:
@@ -63,7 +61,7 @@ void TDMAMac::initialize(int stage){
         // setting radio mode to Rx
         radio->setRadioMode(IRadio::RADIO_MODE_RECEIVER);
 
-
+        fsm.setState(RECEIVE);
 
         // assign slots that given in configuration file while network is up
         std::string slotNumbers = par("slotNumbers");
@@ -98,17 +96,15 @@ void TDMAMac::handleSelfMessage(cMessage *msg){
     // scheduling self event for the next slot
     scheduleAt(simTime() + slotDuration, slotBeginsEvent);
 
-
     // increase slot number with 1 after receiving _slotBegins self message
     updateTimeSlotCounter(slotCounter);
 
+    handleWithFsm(msg);
+
     printAssignedTimeSlots();
 
-    topologyInfo.printSlotAssignment();
-
-    if(!(txQueue->isEmpty()))
-        sendPacket();
-
+    sendPacketIfNodeAvailableForTX();
+    //topologyInfo.printSlotAssignment();
 }
 
 void TDMAMac::handleUpperPacket(Packet *packet){
@@ -119,7 +115,7 @@ void TDMAMac::handleUpperPacket(Packet *packet){
 
 void TDMAMac::handleLowerPacket(Packet *packet){
     EV << getContainingNode(this)->getFullName() << " received a message from lower layer: " << packet->getName() << endl;
-    // handleWithFsm(packet);
+    //handleWithFsm(packet);
 
     if (packet->hasBitError()){
         //EV << "Received " << packet << " contains bit errors or collision, dropping it\n";
@@ -193,7 +189,6 @@ TDMAMac::~TDMAMac(){
     cancelAndDelete(slotBeginsEvent);
 }
 
-
 void TDMAMac::configureInterfaceEntry(){
     MacAddress address = parseMacAddressParameter(par("address"));
     interfaceEntry->setDatarate(bitrate);               // data rate
@@ -206,12 +201,11 @@ void TDMAMac::configureInterfaceEntry(){
     interfaceEntry->setMtu(par("mtu"));
     interfaceEntry->setMulticast(false);
     interfaceEntry->setBroadcast(true);
-
 }
 
 // sends Data Frame
 void TDMAMac::sendPacket(){
-    radio->setRadioMode(IRadio::RADIO_MODE_TRANSMITTER);                // setting radio mode to transmitter
+    //radio->setRadioMode(IRadio::RADIO_MODE_TRANSMITTER);                // setting radio mode to transmitter
     currentTxFrame = txQueue->popPacket();
     //take(currentTxFrame);                                               // to take the ownership of the packet
     // auto hdr = currentTxFrame->peekAtFront<TDMAMacHeaderBase>();
@@ -224,7 +218,6 @@ void TDMAMac::updateTimeSlotCounter(int &slotCounter){
     if(slotCounter == par("frameLength").intValue()){
         EV << "New frame with length " << par("frameLength").intValue() << " has just started.\n";
         slotCounter = 0;
-        // TODO - scheduling the slots in every new frame starts
     }
     EV << "Slot: [" << slotCounter << "]" << std::endl;
 }
@@ -235,4 +228,56 @@ void TDMAMac::printAssignedTimeSlots(){
         EV << slot << " ";
     }
     EV << endl;
+}
+
+bool TDMAMac::isMyTimeSlot(int slotNum) const {
+    int currentNodeId = topologyInfo.getSlotAssignment(slotNum);
+
+    if (currentNodeId == getContainingNode(this)->getId()) {
+        return true;
+    }
+    else if(currentNodeId == -1 ) {
+        return false;
+    }
+}
+
+void TDMAMac::sendPacketIfNodeAvailableForTX(){
+    switch (radio->getRadioMode()) {
+        case IRadio::RADIO_MODE_TRANSMITTER:
+            if (!txQueue->isEmpty()) {
+                sendPacket();
+            } else {
+                EV << "Queue is empty\n";
+            }
+            break;
+        default:
+            EV << "Radio mode is not transmitter mode\n";
+            break;
+    }
+
+}
+
+void TDMAMac::handleWithFsm(cMessage *msg){
+
+    FSMA_Switch(fsm){
+
+        FSMA_State(RECEIVE){
+            FSMA_Event_Transition(Start-Transmit,
+                                  isMyTimeSlot(slotCounter),
+                                  TRANSMIT, radio->setRadioMode(IRadio::RADIO_MODE_TRANSMITTER);
+            );
+        }
+
+        FSMA_State(TRANSMIT){
+           // FSMA_Enter(sendPacketIfNodeAvailableForTX());
+
+            FSMA_Event_Transition(Start-Receive,
+                                  !(isMyTimeSlot(slotCounter)),
+                                  RECEIVE,  radio->setRadioMode(IRadio::RADIO_MODE_RECEIVER);
+            );
+        }
+    }
+
+
+
 }

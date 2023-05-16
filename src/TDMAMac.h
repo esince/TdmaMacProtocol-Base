@@ -28,6 +28,7 @@
 #include "inet/physicallayer/contract/packetlevel/SignalTag_m.h"
 #include "inet/common/ModuleAccess.h"                   // getContainingNOde(), getModuleFromPar
 #include "inet/linklayer/common/MacAddressTag_m.h"      // MacAddressInd
+#include "inet/common/FSMA.h"
 
 #include "TDMAMacHeader_m.h"
 #include "TIB.h"
@@ -42,6 +43,8 @@ class TDMAMac : public MacProtocolBase, public IMacProtocol
 
     void scheduleTimeSlots();
     void updateTimeSlotCounter(int &currentSlotCounter);
+    bool isMyTimeSlot(int slotNum) const;
+    void sendPacketIfNodeAvailableForTX();
     void printAssignedTimeSlots();
 
     int slotCounter;
@@ -49,6 +52,12 @@ class TDMAMac : public MacProtocolBase, public IMacProtocol
 
     TIB topologyInfo;
 
+
+    enum State {
+        RECEIVE,
+        TRANSMIT,
+    };
+    cFSM fsm;
 
     double slotDuration;
     double bitrate;
@@ -77,6 +86,7 @@ public:
     virtual void handleSelfMessage(cMessage *) override;
     virtual void handleUpperPacket(Packet *packet) override;
     virtual void handleLowerPacket(Packet *packet) override;
+    virtual void handleWithFsm(cMessage *msg);
 
     virtual void receiveSignal(cComponent *source, simsignal_t signalID, intval_t value, cObject *details) override;
     void attachSignal(Packet *macPkt);

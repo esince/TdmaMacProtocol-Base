@@ -99,8 +99,8 @@ out/gcc-release//src/TDMAMac.o: src/TDMAMac.cc src/TDMAMac.h \
  ../inet/src/inet/common/ModuleAccess.h \
  ../inet/src/inet/networklayer/contract/IInterfaceTable.h \
  ../inet/src/inet/linklayer/common/MacAddressTag_m.h \
- ../inet/src/inet/linklayer/common/MacAddress_m.h src/TDMAMacHeader_m.h \
- src/TIB.h
+ ../inet/src/inet/linklayer/common/MacAddress_m.h \
+ ../inet/src/inet/common/FSMA.h src/TDMAMacHeader_m.h src/TIB.h
 
 src/TDMAMac.h:
 
@@ -313,6 +313,8 @@ src/TDMAMac.h:
 ../inet/src/inet/linklayer/common/MacAddressTag_m.h:
 
 ../inet/src/inet/linklayer/common/MacAddress_m.h:
+
+../inet/src/inet/common/FSMA.h:
 
 src/TDMAMacHeader_m.h:
 
