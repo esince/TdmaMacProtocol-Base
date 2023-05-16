@@ -5,7 +5,7 @@ This guide provides instructions on setting up the OMNeT++ simulation environmen
 ## Prerequisites
 Before proceeding with the setup, make sure you have completed the following installations:
 
-**OMNeT++**: Follow the instructions in the [OMNeT++ Installation Guide](https://doc.omnetpp.org/omnetpp/InstallGuide.pdf)
+**OMNeT++ v.5.6.2**: Follow the instructions in the [OMNeT++ Installation Guide](https://doc.omnetpp.org/omnetpp/InstallGuide.pdf)
 
 
 **INET Framework**: Refer to the [INET Framework Installation Guide](https://inet.omnetpp.org/Installation.html) for installation instructions.
@@ -40,10 +40,11 @@ To add the INET framework to your project:
 Additionally, open the following files in the Project Explorer view and add the following lines at the end:
 
 **inet/src/inet/common/Protocol.cc:**
-// INET specific conceptual protocol identifiers
-`const Protocol Protocol::hvlsnmac("tdmaMac", "TDMA-Mac");`
+`// INET specific conceptual protocol identifiers`
+`const Protocol Protocol::tdmaMac("tdmaMac", "TDMA-Mac");`
+
 **inet/src/inet/common/Protocol.h**
-// INET specific conceptual protocol identifiers (in alphanumeric order)
+`// INET specific conceptual protocol identifiers (in alphanumeric order)`
 `static const Protocol tdmaMac;`
 
 ## Cleaning and Refreshing the Project
